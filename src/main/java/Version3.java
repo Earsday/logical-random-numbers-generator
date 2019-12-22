@@ -16,6 +16,18 @@ import java.util.stream.Collectors;
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
 
+/**
+ * Internal variables for expressions and sum have been replaced by external csv file.</br>
+ * Therefore, the following 2 methods have been introduced:
+ * <ul>
+ * <li>readCsv(String filename, Map<String, Consumer<String>> dataConsumers)
+ * <li>writeCsv(String filename, int headerStartIndex, int[][] content)
+ * </ul>
+ * Additionally, more validation checks and error handling have been introduced.</br></br>
+ * 
+ * @author Earsday
+ * @deprecated as newer version implemented, please refer to Version4
+ */
 public class Version3 {
 
   private final static List<String> SCORE_EXPRESSION_LIST = new ArrayList<>();

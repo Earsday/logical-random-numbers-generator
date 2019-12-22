@@ -4,6 +4,17 @@ import java.util.Random;
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
 
+/**
+ * Core logics have been enhanced:
+ * <ul>
+ * <li>generateRandomInteger(int min, int max to support '0~4'
+ * <li>evaluateExpression(String expression, int variable) to support '0:x'
+ * </ul>
+ * 'exp4j' is introduced to support complex math expressions.</br></br>
+ * 
+ * @author Earsday
+ * @deprecated as newer version implemented, please refer to Version3
+ */
 public class Version2 {
 
   private final static String[] REQUIREMENT_SCORES = {//

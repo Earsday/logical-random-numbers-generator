@@ -12,10 +12,25 @@ import java.util.Random;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import org.ini4j.Ini;
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
 
+/**
+ * The algorithm of generating numbers has been improved, which speeds up the whole process.</br>
+ * A configuration file 'settings.ini' is introduced to maintain the following settings:
+ * <ul>
+ * <li>name of input csv file
+ * <li>name of output csv file
+ * <li>start number of the header of output csv file
+ * </ul>
+ * Therefore, 'ini4j' has to be introduced to read settings. Additionally, code in this class have
+ * been refactored. The operations of csv file have been moved to another individual class.</br>
+ * </br>
+ * 
+ * @author Earsday
+ */
 public class Version4 {
 
   private final static List<String> SCORE_EXPRESSION_LIST = new ArrayList<>();
@@ -114,10 +129,12 @@ public class Version4 {
         StringBuilder::append));
   }
 
-  private static void generateNumbers() {
+  private static void generateNumbers(int headerStartNumber) {
     results = new int[SCORE_SUM_LIST.size()][SCORE_EXPRESSION_LIST.size()];
     boolean[] resultsLineFilled = new boolean[SCORE_SUM_LIST.size()];
     System.out.println("\nStarting to generate " + SCORE_SUM_LIST.size() + " groups of scores:");
+    System.out.println(">  index  :" + IntStream.range(headerStartNumber, headerStartNumber + SCORE_EXPRESSION_LIST.size())
+        .collect(StringBuilder::new, (r, a) -> r.append(String.format("%3d|", a)), StringBuilder::append));
     long totalMilliSeconds = 0;
     long startTime = new Date().getTime();
     for (int i = 0, k = 1; i < SCORE_SUM_LIST.size();) {
@@ -146,7 +163,7 @@ public class Version4 {
         final long milliSeconds = new Date().getTime() - startTime;
         final String scoreAdditionExpression = Arrays.stream(results[i]).mapToObj(String::valueOf).collect(Collectors.joining(" + "));
         final String log =
-            String.format(">%3d(%3d): %s = %d, took %d milliSeconds;", k++, index + 1, scoreAdditionExpression, sum, milliSeconds);
+            String.format("> %3d(%3d): %s = %d, took %d milliSeconds;", k++, index + 1, scoreAdditionExpression, sum, milliSeconds);
         System.out.println(log);
         totalMilliSeconds += milliSeconds;
         while (i < SCORE_SUM_LIST.size() && resultsLineFilled[i]) {
@@ -169,7 +186,7 @@ public class Version4 {
 
       parseInputFile(inputFilename);
 
-      generateNumbers();
+      generateNumbers(headerStartNumber);
 
       // write results to output file
       CsvHelper.writeCsv(outputFilename, headerStartNumber, results);

@@ -2,6 +2,17 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
 
+/**
+ * Initial version with core logics:
+ * <ul>
+ * <li>randomDigit(int min, int max) to support '0~4'
+ * <li>add(int resultArrayIndex, int baseItemIndex, int delta) to support '0+1'
+ * <li>minus(int resultArrayIndex, int baseItemIndex, int delta) to support '0-1'
+ * </ul>
+ * 
+ * @author Earsday
+ * @deprecated as newer version implemented, please refer to Version2
+ */
 public class Version1 {
 
   private final static String[] REQUIREMENT_SCORES = {//
